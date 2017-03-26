@@ -1,4 +1,8 @@
 com\zebra\emc\tools\ReadingList\ReadingListApplication.class
+com\zebra\emc\tools\ReadingList\Reader.class
 com\zebra\emc\tools\ReadingList\ReadingListController.class
-com\zebra\emc\tools\ReadingList\Book.class
 com\zebra\emc\tools\ReadingList\ReadingListRepository.class
+com\zebra\emc\tools\ReadingList\SecurityConfig$1.class
+com\zebra\emc\tools\ReadingList\Book.class
+com\zebra\emc\tools\ReadingList\SecurityConfig.class
+com\zebra\emc\tools\ReadingList\ReaderRepository.class
