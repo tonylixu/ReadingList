@@ -2,6 +2,7 @@ package com.zebra.emc.tools.ReadingList;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,10 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @Controller: In order to be picked up by component-scanning and automatically be registered as a
  * bean in Spring application context.
  * @ReqyestMapping: Map all of its handler methods to a base URL path of "/".
+ * @ConfigurationProperties: Inject properties into the controller, from "amazon"-prefixed
+ * configuration properties.
  */
 @Controller
 @RequestMapping("/")
+@ConfigurationProperties(prefix = "amazon")
 public class ReadingListController {
+
+    private String associateId;
 
     private ReadingListRepository readingListRepository;
 
@@ -25,6 +31,10 @@ public class ReadingListController {
     @Autowired
     public ReadingListController(ReadingListRepository readingListRepository) {
         this.readingListRepository = readingListRepository;
+    }
+
+    public void setAssociateId(String associateId) {
+        this.associateId = associateId;
     }
 
     /*
@@ -39,6 +49,9 @@ public class ReadingListController {
         List<Book> readingList = readingListRepository.findByReader(reader);
         if (readingList != null) {
             model.addAttribute("books", readingList);
+            model.addAttribute("reader", reader);
+            model.addAttribute("amazonID", associateId);
+
         }
         return "readingList"; // Logical view name
     }

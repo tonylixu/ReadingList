@@ -21,6 +21,13 @@
     </dl>
 </div>
 
+<div>
+    <a th:href="'http://www.amazon.com/gp/product/'
++ ${book.isbn}
++ '/tag=' + ${amazonID}"
+       th:text="${book.title}">Title</a>
+</div>
+
 <div th:if="${#lists.isEmpty(books)}">
     <p>You have no books in your book list</p>
 </div>
