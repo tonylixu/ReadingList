@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.zebra.emc.tools.ReadingList.ReadingListApplicationTests
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.011 sec - in com.zebra.emc.tools.ReadingList.ReadingListApplicationTests
