@@ -45,6 +45,11 @@ public class MockMvcWebTests {
             .build();
     }
 
+    /*
+     * First perform a GET request against "/readingList". then it expects that the request is
+     * successful and that the view has a logical name of readingList. It also asserts that the
+     * model contains an attribute named books and is an empty collection.
+     */
     @Test
     public void homePage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("readlingList"))
