@@ -1,11 +1,14 @@
 package com.zebra.emc.tools.ReadingList;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -60,4 +63,16 @@ public class MockMvcWebTests {
                 Matchers.is(Matchers.empty())));
     }
 
+    @Test
+    public void postBook() throws Exception {
+        mockMvc.perform(post("/readingList")
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+            .param("title", "BOOK TITLE")
+            .param("author", "BOOK AUTHOR")
+            .param("isbn", "1234567890")
+            .param("description", "DESCRIPTION"))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(header().string("Location", "/readingList"));
+
+    }
 }
