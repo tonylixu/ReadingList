@@ -2,10 +2,8 @@ package com.zebra.emc.tools.ReadingList;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -13,28 +11,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @Controller: In order to be picked up by component-scanning and automatically be registered as a
  * bean in Spring application context.
  * @ReqyestMapping: Map all of its handler methods to a base URL path of "/".
- * @ConfigurationProperties: Inject properties into the controller, from "amazon"-prefixed
- * configuration properties.
  */
 @Controller
 @RequestMapping("/")
-@ConfigurationProperties(prefix = "amazon")
 public class ReadingListController {
 
-    private String associateId;
-
     private ReadingListRepository readingListRepository;
+    private AmazonProperties amazonProperties;
 
     /*
-     * Auto inject and configure readingListRepository bean in ReadingListController
+     * Auto inject and configure beans
      */
     @Autowired
-    public ReadingListController(ReadingListRepository readingListRepository) {
+    public ReadingListController(ReadingListRepository readingListRepository, AmazonProperties
+        amazonProperties) {
         this.readingListRepository = readingListRepository;
-    }
-
-    public void setAssociateId(String associateId) {
-        this.associateId = associateId;
+        this.amazonProperties = amazonProperties;
     }
 
     /*
@@ -42,16 +34,13 @@ public class ReadingListController {
      * list of Book into the model under the key "books" and return "readingList" as the logical
      * name of the view to render the model
      */
-    @RequestMapping(value = "/{reader}", method = RequestMethod.GET)
-    public String readersBooks(
-        @PathVariable("reader") String reader, Model model) {
-
+    @RequestMapping(method = RequestMethod.GET)
+    public String readersBooks(String reader, Model model) {
         List<Book> readingList = readingListRepository.findByReader(reader);
         if (readingList != null) {
             model.addAttribute("books", readingList);
             model.addAttribute("reader", reader);
-            model.addAttribute("amazonID", associateId);
-
+            model.addAttribute("amazonID", amazonProperties.getAssociateId());
         }
         return "readingList"; // Logical view name
     }
@@ -62,12 +51,10 @@ public class ReadingListController {
      * saves the modified Book via the repository's save() method. Finally, it returns by
      * specifying a redirect to /{reader} (which will be handled by the other controller method).
      */
-    @RequestMapping(value = "/{reader}", method = RequestMethod.POST)
-    public String addToReadingList(
-        @PathVariable("reader") String reader, Book book) {
+    @RequestMapping(method = RequestMethod.POST)
+    public String addToReadingList(String reader, Book book) {
         book.setReader(reader);
         readingListRepository.save(book);
-        return "redirect:/{reader}";
+        return "redirect:/";
     }
-
 }

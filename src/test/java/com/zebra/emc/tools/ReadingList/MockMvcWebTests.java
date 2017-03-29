@@ -1,11 +1,15 @@
 package com.zebra.emc.tools.ReadingList;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+
 import org.hamcrest.Matchers;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -51,13 +55,27 @@ public class MockMvcWebTests {
      * model contains an attribute named books and is an empty collection.
      */
     @Test
+    @Ignore
     public void homePage() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("readlingList"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/readingList"))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.view().name("readingList"))
-            .andExpect(MockMvcResultMatchers.modle().attributeExists("books"))
+            .andExpect(MockMvcResultMatchers.model().attributeExists("books"))
             .andExpect(MockMvcResultMatchers.model().attribute("books",
                 Matchers.is(Matchers.empty())));
     }
 
+    @Test
+    @Ignore
+    public void postBook() throws Exception {
+        mockMvc.perform(post("/readingList")
+            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+            .param("title", "BOOK TITLE")
+            .param("author", "BOOK AUTHOR")
+            .param("isbn", "1234567890")
+            .param("description", "DESCRIPTION"))
+            .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+            .andExpect(MockMvcResultMatchers.header().string("Location", "/readingList"));
+
+    }
 }
