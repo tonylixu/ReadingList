@@ -8,3 +8,7 @@ logging:
   level:
     root: INFO
     org.springframework.secrutiy: DEBUG
+
+management:
+  security:
+    enabled: false

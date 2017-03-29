@@ -35,8 +35,8 @@ public class ReadingListController {
      * name of the view to render the model
      */
     @RequestMapping(method = RequestMethod.GET)
-    public String readersBooks(String reader, Model model) {
-        List<Book> readingList = readingListRepository.findByReader(reader);
+    public String readersBooks(Reader reader, Model model) {
+        List<Book> readingList = readingListRepository.findByReader(reader.getUsername());
         if (readingList != null) {
             model.addAttribute("books", readingList);
             model.addAttribute("reader", reader);
