@@ -9,6 +9,6 @@
 
     <logger name="root" level="INFO" />
     <root level="INFO">
-        <appender-ref red="STDOUT" />
+        <appender-ref ref="STDOUT" />
     </root>
 </configuration>

@@ -1,2 +1,5 @@
 amazon:
   associatedId: tonylixu
+
+server:
+  port: 8000

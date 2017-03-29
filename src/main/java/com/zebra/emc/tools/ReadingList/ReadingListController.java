@@ -62,12 +62,11 @@ public class ReadingListController {
      * saves the modified Book via the repository's save() method. Finally, it returns by
      * specifying a redirect to /{reader} (which will be handled by the other controller method).
      */
-    @RequestMapping(value = "/{reader}", method = RequestMethod.POST)
-    public String addToReadingList(
-        @PathVariable("reader") String reader, Book book) {
+    @RequestMapping(method = RequestMethod.POST)
+    public String addToReadingList(String reader, Book book) {
         book.setReader(reader);
         readingListRepository.save(book);
-        return "redirect:/{reader}";
+        return "redirect:/";
     }
 
 }

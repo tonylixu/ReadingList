@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  * @Configuration: Indicates that this class can be used by IoC container
- * @EnableWebSecurity: Add this to an @Configuration calss to have the Spring Security
+ * @EnableWebSecurity: Add this to an @Configuration class to have the Spring Security
  * configuration defined in any WebSecurityConfigurer or more likely by extending the
  * WebSecurityConfigurerAdapter base class
  *
@@ -55,5 +55,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                }
             });
     }
-
 }
